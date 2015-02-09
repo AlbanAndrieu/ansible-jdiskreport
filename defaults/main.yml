@@ -12,7 +12,9 @@ jdiskreport_base_dir: "/usr/local/jdiskreport"
 jdiskreport_dir_tmp: "/tmp" # or override with "{{ tempdir.stdout }} in order to have be sure to download the file"
 
 jdiskreport_version: "1_4_1"
+jdiskreport_archive_version: "1.4.1"
 
 jdiskreport_name: "jdiskreport-{{ jdiskreport_version }}"
 jdiskreport_archive: "{{ jdiskreport_name }}.zip"
+jdiskreport_archive_extracted: "jdiskreport-{{ jdiskreport_archive_version }}"
 jdiskreport_url: "http://www.jgoodies.com/download/jdiskreport/{{ jdiskreport_archive }}"

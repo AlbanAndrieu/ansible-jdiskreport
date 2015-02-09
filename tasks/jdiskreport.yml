@@ -61,5 +61,5 @@
   file: name={{ tempdir.stdout }} state=absent
   tags: jdiskreport_setup
 
-- debug: msg=" jdiskreport | Start jdiskreport {{ jdiskreport_base_dir }}/{{ jdiskreport_name }}/bin/yjp.sh"
+- debug: msg=" jdiskreport | Start jdiskreport java -jar {{ jdiskreport_base_dir }}/{{ jdiskreport_archive_extracted }}/{{ jdiskreport_archive_extracted }}.jar"
 
