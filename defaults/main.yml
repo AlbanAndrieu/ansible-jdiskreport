@@ -1,0 +1,18 @@
+jdiskreport_enabled: yes                       # Enable module
+
+#user: 'albandri' #please override me
+user: "{{ lookup('env','USER') }}"
+jdiskreport_owner: "{{ user }}"
+jdiskreport_group: "{{ jdiskreport_owner }}"
+#home: '~' #please override me
+home: "{{ lookup('env','HOME') }}"
+jdiskreport_owner_home: "{{ home }}"
+jdiskreport_base_dir: "/usr/local/jdiskreport"
+
+jdiskreport_dir_tmp: "/tmp" # or override with "{{ tempdir.stdout }} in order to have be sure to download the file"
+
+jdiskreport_version: "1_4_1"
+
+jdiskreport_name: "jdiskreport-{{ jdiskreport_version }}"
+jdiskreport_archive: "{{ jdiskreport_name }}.zip"
+jdiskreport_url: "http://www.jgoodies.com/download/jdiskreport/{{ jdiskreport_archive }}"
