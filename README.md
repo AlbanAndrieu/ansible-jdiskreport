@@ -1,8 +1,8 @@
 ## alban.andrieu.jdiskreport
 
-[![Travis CI](http://img.shields.io/travis/AlbanAndrieu/ansible-jdiskreport.svg?style=flat)](http://travis-ci.org/AlbanAndrieu/ansible-jdiskreport) [![Branch](http://img.shields.io/github/tag/AlbanAndrieu/ansible-jdiskreport.svg?style=flat-square)](https://github.com/AlbanAndrieu/ansible-jdiskreport/tree/master) [![Donate](https://img.shields.io/gratipay/AlbanAndrieu.svg?style=flat)](https://www.gratipay.com/AlbanAndrieu)  [![Ansible Galaxy](http://img.shields.io/badge/galaxy-alban.andrieu.jdiskreport-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/1997) [![Platforms](http://img.shields.io/badge/platforms-ubuntu-lightgrey.svg?style=flat)](#)
+[![Travis CI](http://img.shields.io/travis/AlbanAndrieu/ansible-jdiskreport.svg?style=flat)](http://travis-ci.org/AlbanAndrieu/ansible-jdiskreport) [![Branch](http://img.shields.io/github/tag/AlbanAndrieu/ansible-jdiskreport.svg?style=flat-square)](https://github.com/AlbanAndrieu/ansible-jdiskreport/tree/master) [![Donate](https://img.shields.io/gratipay/AlbanAndrieu.svg?style=flat)](https://www.gratipay.com/AlbanAndrieu)  [![Ansible Galaxy](http://img.shields.io/badge/galaxy-alban.andrieu.jdiskreport-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/2847) [![Platforms](http://img.shields.io/badge/platforms-ubuntu-lightgrey.svg?style=flat)](#)
 
-Ensures that jdiskreport is properly installed (using `apt`) and configured
+Ensures that [jdiskreport](http://www.jgoodies.com/downloads/jdiskreport/) is properly installed and configured.
 
 ### Installation
 
@@ -21,38 +21,24 @@ List of default variables available in the inventory:
 ```yaml
         jdiskreport_enabled: yes                       # Enable module
     
-    jdiskreport_home_dir: "/usr/share/jdiskreport"
-    jdiskreport_configuration: "{{ jdiskreport_home_dir }}/bin/jdiskreport.properties"
+    #user: 'albandri' #please override me
+    user: "{{ lookup('env','USER') }}"
+    jdiskreport_owner: "{{ user }}"
+    jdiskreport_group: "{{ jdiskreport_owner }}"
+    #home: '~' #please override me
+    home: "{{ lookup('env','HOME') }}"
+    jdiskreport_owner_home: "{{ home }}"
+    jdiskreport_base_dir: "/usr/local/jdiskreport"
     
     jdiskreport_dir_tmp: "/tmp" # or override with "{{ tempdir.stdout }} in order to have be sure to download the file"
     
-    jdiskreport_plugins_version: "1.2.0"
+    jdiskreport_version: "1_4_1"
+    jdiskreport_archive_version: "1.4.1"
     
-    jdiskreport_plugins_standard_enabled: yes
-    jdiskreport_plugins_standard_archive: "jdiskreportPlugins-Standard-{{ jdiskreport_plugins_version }}.zip"
-    jdiskreport_plugins_standard_url: "http://jdiskreport-plugins.org/downloads/file/{{ jdiskreport_plugins_standard_archive }}"
-    
-    jdiskreport_plugins_extras_enabled: yes
-    jdiskreport_plugins_extras_archive: "jdiskreportPlugins-Extras-{{ jdiskreport_plugins_version }}.zip"
-    jdiskreport_plugins_extras_url: "http://jdiskreport-plugins.org/downloads/file/{{ jdiskreport_plugins_extras_archive }}"
-    
-    jdiskreport_plugins_extraslibs_enabled: yes
-    jdiskreport_plugins_extraslibs_archive: "jdiskreportPlugins-ExtrasLibs-{{ jdiskreport_plugins_version }}.zip"
-    jdiskreport_plugins_extraslibs_url: "http://jdiskreport-plugins.org/downloads/file/{{ jdiskreport_plugins_extraslibs_archive }}"
-    
-    jdiskreport_plugins_webdriver_enabled: no
-    jdiskreport_plugins_webdriver_archive: "jdiskreportPlugins-WebDriver-{{ jdiskreport_plugins_version }}.zip"
-    jdiskreport_plugins_webdriver_url: "http://jdiskreport-plugins.org/downloads/file/{{ jdiskreport_plugins_webdriver_archive }}"
-    
-    jdiskreport_plugins_hadoop_enabled: no
-    jdiskreport_plugins_hadoop_archive: "jdiskreportPlugins-Hadoop-{{ jdiskreport_plugins_version }}.zip"
-    jdiskreport_plugins_hadoop_url: "http://jdiskreport-plugins.org/downloads/file/{{ jdiskreport_plugins_hadoop_archive }}"
-    
-    jdiskreport_serveragent_version: "2.2.1"
-    
-    jdiskreport_serveragent_enabled: no
-    jdiskreport_serveragent_archive: "ServerAgent-{{ jdiskreport_serveragent_version }}.zip"
-    jdiskreport_serveragent_url: "http://jdiskreport-plugins.org/downloads/file/{{ jdiskreport_serveragent_archive }}"
+    jdiskreport_name: "jdiskreport-{{ jdiskreport_version }}"
+    jdiskreport_archive: "{{ jdiskreport_name }}.zip"
+    jdiskreport_archive_extracted: "jdiskreport-{{ jdiskreport_archive_version }}"
+    jdiskreport_url: "http://www.jgoodies.com/download/jdiskreport/{{ jdiskreport_archive }}"
 ```
 
 
