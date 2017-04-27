@@ -60,6 +60,8 @@
 - name: jdiskreport | Cleanup temporary directory
   file: name={{ tempdir.stdout }} state=absent
   tags: jdiskreport_setup
+  changed_when: false    
+  ignore_errors: "{{ ansible_check_mode }}"    
 
 - debug: msg=" jdiskreport | Start jdiskreport java -jar {{ jdiskreport_base_dir }}/{{ jdiskreport_archive_extracted }}/{{ jdiskreport_archive_extracted }}.jar"
 
