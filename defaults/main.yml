@@ -9,7 +9,8 @@ home: "{{ lookup('env','HOME') }}"
 jdiskreport_owner_home: "{{ home }}"
 jdiskreport_base_dir: "/usr/local/jdiskreport"
 
-jdiskreport_dir_tmp: "/tmp" # or override with "{{ tempdir.stdout }} in order to have be sure to download the file"
+#jdiskreport_dir_tmp: "/tmp" # or override with "{{ tempdir.stdout }} in order to have be sure to download the file"
+jdiskreport_dir_tmp: "{{ tempdir.stdout }}"
 
 jdiskreport_version: "1_4_1"
 jdiskreport_archive_version: "1.4.1"
