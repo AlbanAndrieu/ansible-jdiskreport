@@ -2,20 +2,14 @@
 # This playbook contains common plays that will be run on all nodes.
 
 - name: jdiskreport | Check user exists
-  user: name={{jdiskreport_owner}} state=present
+  user: name={{ jdiskreport_owner }} state=present
 
 - name: jdiskreport | Check user home directory
-  stat: path={{jdiskreport_owner_home}}
+  stat: path={{ jdiskreport_owner_home }}
   register: home_present
 
 - debug: msg=" jdiskreport | Path exists and is a directory"
   when: home_present.stat.isdir is defined and home_present.stat.isdir == true
-
-- name: jdiskreport | Create temporary directory
-  shell: mktemp -d
-  register: tempdir
-  sudo: true
-  tags: jdiskreport_setup
 
 - name: jdiskreport | Install zip
   apt:
@@ -29,22 +23,22 @@
   register: jdiskreport_download
   when: (ansible_distribution == 'Solaris')
   tags: jdiskreport_setup
-  
+
 - name: jdiskreport | Download jdiskreport
   get_url:
     url="{{ jdiskreport_url }}"
     dest="{{ jdiskreport_dir_tmp }}/"
   register: jdiskreport_download
-  when: (ansible_distribution != 'Solaris')  
+  when: (ansible_distribution != 'Solaris')
   tags: jdiskreport_setup
 
 - name: jdiskreport | Create base directory
   file:
-    dest="{{jdiskreport_base_dir}}"
+    dest="{{ jdiskreport_base_dir }}"
     state=directory
-    owner="{{jdiskreport_owner}}"
-    group="{{jdiskreport_group}}"
-  sudo : yes
+    owner="{{ jdiskreport_owner }}"
+    group="{{ jdiskreport_group }}"
+  become : true
 #  when: jdiskreport_download.changed
   tags: jdiskreport_setup
 
@@ -56,12 +50,6 @@
 #- name: jdiskreport | Ensure jdiskreport restarted
 #  service: name=jdiskreport state=restarted
 #  when: jdiskreport_configure.changed
-
-- name: jdiskreport | Cleanup temporary directory
-  file: name={{ tempdir.stdout }} state=absent
-  tags: jdiskreport_setup
-  changed_when: false    
-  ignore_errors: "{{ ansible_check_mode }}"    
 
 - debug: msg=" jdiskreport | Start jdiskreport java -jar {{ jdiskreport_base_dir }}/{{ jdiskreport_archive_extracted }}/{{ jdiskreport_archive_extracted }}.jar"
 
